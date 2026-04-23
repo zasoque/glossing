@@ -47,7 +47,7 @@
 									{/each}
 								</td>
 							{:else}
-								<td class="spaced" class:caps={caps(word)}>
+								<td class="spaced">
 									{#each word.split('.') as part, j}
 										<span class:caps={caps(part)}>
 											{part}{j === word.split('.').length - 1 ? '' : '.'}
