@@ -23,6 +23,10 @@
 		console.log(ls);
 		return ls;
 	});
+
+	function caps(word: string) {
+		return !/[a-z]/.test(word) && /[A-Z]/.test(word);
+	}
 </script>
 
 <div class="container-container">
@@ -37,9 +41,9 @@
 					<tr>
 						{#each line as word}
 							{#if word[0] === '-'}
-								<td class="hyphen">{word}</td>
+								<td class="hyphen" class:caps={caps(word)}>{word}</td>
 							{:else}
-								<td class="spaced">{word}</td>
+								<td class="spaced" class:caps={caps(word)}>{word}</td>
 							{/if}
 						{/each}
 					</tr>
@@ -84,5 +88,10 @@
 	.raw {
 		width: 100%;
 		height: 200px;
+	}
+
+	.caps {
+		text-transform: lowercase;
+		font-variant-caps: all-small-caps;
 	}
 </style>
