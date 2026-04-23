@@ -6,9 +6,11 @@
 
 <svelte:head>
 	<style>
+		@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
 		body {
 			margin: 0;
-			font-family: system-ui, sans-serif;
+			font-family: 'Pretendard', system-ui, sans-serif;
 		}
 	</style>
 	<link rel="icon" href={favicon} />
