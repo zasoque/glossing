@@ -8,19 +8,17 @@
 		for (let i = 1; i < ls.length - 1; i++) {
 			const row = [];
 			ls[i].split(/\s+/).forEach((word) => {
-				if (word.indexOf('-') !== -1) {
-					const parts = word.split('-');
-					parts.forEach((part, i) => {
-						if (part) row.push((i === 0 ? '' : '-') + part);
-					});
-					return;
+				while (word.length > 0) {
+					console.log(word);
+					let idx = word.indexOf('-');
+					if (idx === -1) break;
+					row.push(word.slice(0, idx + 1));
+					word = word.slice(idx + 1);
 				}
-
 				if (word) row.push(word);
 			});
 			ls[i] = row;
 		}
-		console.log(ls);
 		return ls;
 	});
 
@@ -40,10 +38,22 @@
 				{:else}
 					<tr>
 						{#each line as word}
-							{#if word[0] === '-'}
-								<td class="hyphen" class:caps={caps(word)}>{word}</td>
+							{#if word[word.length - 1] === '-' || word[word.length - 1] === '.'}
+								<td class="hyphen">
+									{#each word.split('.') as part, j}
+										<span class:caps={caps(part)}>
+											{part}{j === word.split('.').length - 1 ? '' : '.'}
+										</span>
+									{/each}
+								</td>
 							{:else}
-								<td class="spaced" class:caps={caps(word)}>{word}</td>
+								<td class="spaced" class:caps={caps(word)}>
+									{#each word.split('.') as part, j}
+										<span class:caps={caps(part)}>
+											{part}{j === word.split('.').length - 1 ? '' : '.'}
+										</span>
+									{/each}
+								</td>
 							{/if}
 						{/each}
 					</tr>
@@ -77,8 +87,12 @@
 		border-collapse: collapse;
 	}
 
+	td {
+		padding: 0;
+	}
+
 	.spaced:not(:first-child) {
-		padding-left: 1em;
+		padding-right: 1em;
 	}
 
 	.hyphen {
