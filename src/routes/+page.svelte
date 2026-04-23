@@ -84,7 +84,7 @@
 		padding: 0;
 	}
 
-	.spaced:not(:first-child) {
+	.spaced {
 		padding-right: 1em;
 	}
 
