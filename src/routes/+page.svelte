@@ -38,23 +38,16 @@
 				{:else}
 					<tr>
 						{#each line as word}
-							{#if word[word.length - 1] === '-' || word[word.length - 1] === '.'}
-								<td class="hyphen">
-									{#each word.split('.') as part, j}
-										<span class:caps={caps(part)}>
-											{part}{j === word.split('.').length - 1 ? '' : '.'}
-										</span>
-									{/each}
-								</td>
-							{:else}
-								<td class="spaced">
-									{#each word.split('.') as part, j}
-										<span class:caps={caps(part)}>
-											{part}{j === word.split('.').length - 1 ? '' : '.'}
-										</span>
-									{/each}
-								</td>
-							{/if}
+							<td
+								class:hyphen={word[word.length - 1] === '-' || word[word.length - 1] === '.'}
+								class:spaced={word[word.length - 1] !== '-' && word[word.length - 1] !== '.'}
+							>
+								{#each word.split('.') as part, j}
+									<span class:caps={caps(part)}>
+										{part}{j === word.split('.').length - 1 ? '' : '.'}
+									</span>
+								{/each}
+							</td>
 						{/each}
 					</tr>
 				{/if}
