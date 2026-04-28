@@ -9,11 +9,20 @@
 			const row = [];
 			ls[i].split(/\s+/).forEach((word) => {
 				while (word.length > 0) {
-					console.log(word);
-					let idx = word.indexOf('-');
+					let hyidx = word.indexOf('-');
+					let eqidx = word.indexOf('=');
+					let idx = -1;
+					if (hyidx !== -1 && eqidx !== -1) {
+						idx = Math.min(hyidx, eqidx);
+					} else if (hyidx !== -1) {
+						idx = hyidx;
+					} else if (eqidx !== -1) {
+						idx = eqidx;
+					}
+
 					if (idx === -1) break;
 					row.push(word.slice(0, idx));
-					row.push('-');
+					row.push(word.slice(idx, idx + 1));
 					word = word.slice(idx + 1);
 				}
 				if (word) row.push(word);
@@ -40,10 +49,17 @@
 					<tr>
 						{#each line as word, j}
 							<td
-								class:hyphen={word[word.length - 1] === '-' || word[word.length - 1] === '.'}
+								class:hyphen={word[word.length - 1] === '-' ||
+									word[word.length - 1] === '.' ||
+									word[word.length - 1] === '=' ||
+									line[j - 1] === '-' ||
+									line[j - 1] === '.' ||
+									line[j - 1] === '='}
 								class:spaced={word[word.length - 1] !== '-' &&
+									word[word.length - 1] !== '=' &&
 									word[word.length - 1] !== '.' &&
-									line[j - 1] !== '-'}
+									line[j - 1] !== '-' &&
+									line[j - 1] !== '='}
 							>
 								{#each word.split('.') as part, j}
 									<span class:caps={caps(part)}>
@@ -68,7 +84,6 @@
 		gap: 2em;
 		height: 100vh;
 		flex-direction: column;
-		max-width: 800px;
 		margin: 0 auto;
 		justify-content: center;
 	}
