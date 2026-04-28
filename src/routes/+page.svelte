@@ -55,11 +55,20 @@
 									line[j - 1] === '-' ||
 									line[j - 1] === '.' ||
 									line[j - 1] === '='}
-								class:spaced={word[word.length - 1] !== '-' &&
+								class:spaced-left={word[0] !== '-' &&
+									word[0] !== '=' &&
+									word[0] !== '.' &&
+									line[j - 1] &&
+									line[j - 1][line[j - 1].length - 1] !== '-' &&
+									line[j - 1][line[j - 1].length - 1] !== '.' &&
+									line[j - 1][line[j - 1].length - 1] !== '='}
+								class:spaced-right={word[word.length - 1] !== '-' &&
 									word[word.length - 1] !== '=' &&
 									word[word.length - 1] !== '.' &&
-									line[j - 1] !== '-' &&
-									line[j - 1] !== '='}
+									line[j + 1] &&
+									line[j + 1][0] !== '-' &&
+									line[j + 1][0] !== '=' &&
+									line[j + 1][0] !== '.'}
 							>
 								{#each word.split('.') as part, j}
 									<span class:caps={caps(part)}>
@@ -102,8 +111,12 @@
 		padding: 0;
 	}
 
-	.spaced:not(:first-child) {
+	.spaced-left:not(:first-child) {
 		padding-left: 1em;
+	}
+
+	.spaced-right {
+		padding-right: 1em;
 	}
 
 	.hyphen {
