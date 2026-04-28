@@ -12,7 +12,8 @@
 					console.log(word);
 					let idx = word.indexOf('-');
 					if (idx === -1) break;
-					row.push(word.slice(0, idx + 1));
+					row.push(word.slice(0, idx));
+					row.push('-');
 					word = word.slice(idx + 1);
 				}
 				if (word) row.push(word);
@@ -37,10 +38,12 @@
 					</tr>
 				{:else}
 					<tr>
-						{#each line as word}
+						{#each line as word, j}
 							<td
 								class:hyphen={word[word.length - 1] === '-' || word[word.length - 1] === '.'}
-								class:spaced={word[word.length - 1] !== '-' && word[word.length - 1] !== '.'}
+								class:spaced={word[word.length - 1] !== '-' &&
+									word[word.length - 1] !== '.' &&
+									line[j - 1] !== '-'}
 							>
 								{#each word.split('.') as part, j}
 									<span class:caps={caps(part)}>
@@ -84,8 +87,8 @@
 		padding: 0;
 	}
 
-	.spaced {
-		padding-right: 1em;
+	.spaced:not(:first-child) {
+		padding-left: 1em;
 	}
 
 	.hyphen {
