@@ -106,7 +106,6 @@
 					{/if}
 				{/each}
 			</table>
-			<div style="color: #888; font-size: 6px;">zasoque.org/glossing</div>
 		</div>
 	</div>
 	<div class="container">
